@@ -262,20 +262,8 @@ namespace Microsoft.Azure.Management.ApiManagement.ArmTemplates.Creator.Template
                 }
                 apiTemplateResource.Properties.Format = format;
                 apiTemplateResource.Properties.Value = value;
-
-                // #562: deploying multiple versions of an API may fail because while trying to deploy the initial template
-                // overwrite the initial template’s path property to a dummy value
-                // this value will be restored when the subsequent template is deployed
-
-                if (isSplit && isInitial)
-                {
-                    apiTemplateResource.Properties.Path = api.Suffix + $"/{Guid.NewGuid():n}";
-                }
-                else
-                {
-                    apiTemplateResource.Properties.Path = api.Suffix;
-                }
-
+                apiTemplateResource.Properties.Path = api.Suffix;
+                
                 if (!string.IsNullOrEmpty(api.ServiceUrl))
                 {
                     apiTemplateResource.Properties.ServiceUrl = this.MakeServiceUrl(api);
